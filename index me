@@ -1,0 +1,19 @@
+<div id="animeList"></div>
+
+<script>
+let data = JSON.parse(localStorage.getItem("anime")) || [];
+
+let html = "";
+
+data.forEach(a=>{
+  html += `
+    <div>
+      <img src="${a.img}" width="150">
+      <h3>${a.title}</h3>
+      <a href="${a.video}" target="_blank">Watch</a>
+    </div>
+  `;
+});
+
+document.getElementById("animeList").innerHTML = html;
+</script>
