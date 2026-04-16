@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Admin Panel</title>
+</head>
+<body style="background:black;color:white">
+
+<h2>Admin Login</h2>
+
+<div id="login">
+  <input id="user" placeholder="Username"><br><br>
+  <input id="pass" type="password" placeholder="Password"><br><br>
+  <button onclick="login()">Login</button>
+</div>
+
+<div id="panel" style="display:none;">
+  <h2>Admin Panel</h2>
+
+  <input id="title" placeholder="Anime Title"><br><br>
+  <input id="img" placeholder="Poster URL"><br><br>
+  <input id="video" placeholder="Episode Video URL (Drive/MP4)"><br><br>
+
+  <button onclick="addAnime()">Add Anime</button>
+
+  <h3>Saved Anime</h3>
+  <div id="list"></div>
+</div>
+
+<script>
+function login(){
+  let u = document.getElementById("user").value;
+  let p = document.getElementById("pass").value;
+
+  if(u==="admin" && p==="1234"){
+    document.getElementById("login").style.display="none";
+    document.getElementById("panel").style.display="block";
+    loadAnime();
+  } else {
+    alert("Wrong login");
+  }
+}
+
+function addAnime(){
+  let title = document.getElementById("title").value;
+  let img = document.getElementById("img").value;
+  let video = document.getElementById("video").value;
+
+  let data = JSON.parse(localStorage.getItem("anime")) || [];
+
+  data.push({title, img, video});
+  localStorage.setItem("anime", JSON.stringify(data));
+
+  loadAnime();
+}
+
+function loadAnime(){
+  let data = JSON.parse(localStorage.getItem("anime")) || [];
+  let html = "";
+
+  data.forEach(a=>{
+    html += `<p>${a.title}</p>`;
+  });
+
+  document.getElementById("list").innerHTML = html;
+}
+</script>
+
+</body>
+</html>
